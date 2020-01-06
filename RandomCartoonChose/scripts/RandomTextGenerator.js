@@ -24,44 +24,24 @@ var Animation = require('Animation');
 // Use export keyword to make a symbol available in scripting debug console
 export const Diagnostics = require('Diagnostics');
 var BackgroundMainImagePlane = Scene.root.find('BackgroundMain');
-//var colorSelected = Reactive.RGBA(1,0.0, 0.0, 1.0);
 var PlaneRegMaterial = Materials.get('RegularMaterial');
-//var ColorTexturev2 = Materials.get('RegularMaterial');
-var blurColor = Reactive.pack4(0,0,0,1);
-
-const gradient = Shaders.gradient({"type" : Shaders.GradientType.HORIZONTAL});
-
-// Create the first mix paramaters
-const color1 = Reactive.pack4(0,0,0,1);
-const color2 = Reactive.pack4(0,0.25,1,1);
-
-// Create the first mix
-var BunnyTexture = Textures.get('simpson');
-
-const mix1 = Reactive.mix(color1,color2,gradient);
 
 
-const textureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
+// Different Textures
+var BunnyTexture = Textures.get('bunny_effect');
+var SimpsonTexture = Textures.get('simpson');
+var BartTexture = Textures.get('bart');
+var ListTextures = [BunnyTexture,SimpsonTexture,BartTexture];
+const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 
 //BackgroundMainImagePlane.material = Materials.get('RegularMaterial0');
-PlaneRegMaterial.setTexture(BunnyTexture.signal, {textureSlotName: textureSlot});
-//var texSig = Textures.get('simpson').signal;//optional for your use
-//var packedCol = Reactive.pack4(1, 0.5, 0.7, 1);
-//var newCol = Reactive.mul(texSig, packedCol);//optional for your use
-//const textureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
+PlaneRegMaterial.setTexture(BunnyTexture.signal, {textureSlotName: DiffuseTextureSlot});
 
-//Materials.get('RegularMaterial').setTexture(newCol, {textureSlotName: BartTexture});
-//Materials.get('RegularMaterial').setTexture(BunnyTexture);
-//Diagnostics.log(BunnyTexture);
-//ColorTexturev2.diffuse.
-//ColorTexture.color = colorSelected;
-// 
-// Repeating timer:
-//
 
-Time.ms.interval(1000).subscribe(
+Time.ms.interval(100).subscribe(
     function(elapsedTime) {
-        PlaneRegMaterial.setTexture(BunnyTexture.signal, {textureSlotName: textureSlot});
+        var randomCartoonNum = getRandomInt(ListTextures.length);
+        PlaneRegMaterial.setTexture(ListTextures[randomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
 
         // NOTE: Time.ms may differ slightly from the elapsed
         // time passed to the callback. Time.ms shows the exact
@@ -85,6 +65,10 @@ Time.ms.interval(1000).subscribe(
         // });
     });
 
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+      }
 //console.log(Math.random())
 
 // To use variables and functions across files, use export/import keyword
