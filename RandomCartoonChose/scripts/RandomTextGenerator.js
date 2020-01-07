@@ -28,14 +28,22 @@ var PlaneRegMaterial = Materials.get('RegularMaterial');
 
 
 // Different Textures
-var BunnyTexture = Textures.get('bunny_effect');
-var SimpsonTexture = Textures.get('simpson');
-var BartTexture = Textures.get('bart');
-var ListTextures = [BunnyTexture,SimpsonTexture,BartTexture];
+
+
+var ImageTobeUsed = "";
+var ListTextures = [];
+
+var i;
+for (i = 1; i < 51; i++) {
+    ImageTobeUsed = "v" + i;
+    ListTextures.push(Textures.get(ImageTobeUsed));
+}
+
+//var ListTextures = [BunnyTexture,SimpsonTexture,BartTexture];
 const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 
 //BackgroundMainImagePlane.material = Materials.get('RegularMaterial0');
-PlaneRegMaterial.setTexture(BunnyTexture.signal, {textureSlotName: DiffuseTextureSlot});
+//PlaneRegMaterial.setTexture(BunnyTexture.signal, {textureSlotName: DiffuseTextureSlot});
 
 
 Time.ms.interval(100).subscribe(
