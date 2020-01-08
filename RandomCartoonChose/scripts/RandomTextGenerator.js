@@ -18,60 +18,70 @@ var Materials = require('Materials');
 var Textures = require('Textures');
 const Shaders = require('Shaders');
 const CameraInfo = require('CameraInfo');
+const Audio = require('Audio');
 
-// Use export keyword to make a symbol available in scripting debug console
 export const Diagnostics = require('Diagnostics');
+ var GetStarted;
 var ImageTobeUsed = "";
-
-var BackgroundMainImagePlane = Scene.root.find('BackgroundMain');
+var RandomCartoonNum;
+//var BackgroundMainImagePlane = Scene.root.find('BackgroundMain');
 var PlaneRegMaterial = Materials.get('RegularMaterial');
-const isRecordingVideo = CameraInfo.isRecordingVideo;
-
-isRecordingVideo.onOff().subscribe(  
-    function Reset() {
-        ImageSelected =false;
-      });
-
-// Different Textures
-
 var ListTextures = [];
-
+// Different Textures
+//Assigning Simple background Image
+const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 var i;
 for (i = 1; i < 51; i++) {
     ImageTobeUsed = "v" + i;
     ListTextures.push(Textures.get(ImageTobeUsed));
 }
+const isRecordingVideo = CameraInfo.isRecordingVideo;
+PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
 
-const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
-var RandomCartoonNum;
-var ImageSelected =false;
+isRecordingVideo.monitor().subscribe(function(videoOn) {
+    Diagnostics.log(videoOn);
+   // plane.material.diffuse = configuration.items[index.newValue].image_texture;
+   PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+if (videoOn)
+{
+    //RESET
+    Audio.getPlaybackController("foundeffect").reset();
+ PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+var ImageSelected =true;
+var GameStarted = false;
 
-Time.ms.interval(200).subscribe(
+Time.ms.interval(2000).subscribe(
+    function(elapsedTime) {
+        if (!GameStarted)
+        {
+          GameStarted=true;
+          ImageSelected = false;
+        }
+    });
+
+
+Time.ms.interval(100).subscribe(
     function(elapsedTime) {
         if(!ImageSelected)
         {
             RandomCartoonNum = getRandomInt(ListTextures.length);
             PlaneRegMaterial.setTexture(ListTextures[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
         }
-        // NOTE: Time.ms may differ slightly from the elapsed
-        // time passed to the callback. Time.ms shows the exact
-        // time since the effect started, whereas the callback
-        // exposes an exact multiple of the specified interval.
-       // Diagnostics.log(Time.ms.lastValue);
     });
 
 
-Time.ms.interval(5000).subscribe(
+Time.ms.interval(6000).subscribe(
         function(elapsedTime) {
             if (!ImageSelected)
             {
                 ImageSelected =true;
+                Audio.getPlaybackController("foundeffect").play();
                 PlaneRegMaterial.setTexture(ListTextures[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
             }
         });
-    
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
       }
-
+    }
+    });  
