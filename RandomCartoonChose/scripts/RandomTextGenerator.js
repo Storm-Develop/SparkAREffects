@@ -31,7 +31,7 @@ var ListTextures = [];
 //Assigning Simple background Image
 const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 var i;
-for (i = 1; i < 51; i++) {
+for (i = 1; i < 49; i++) {
     ImageTobeUsed = "v" + i;
     ListTextures.push(Textures.get(ImageTobeUsed));
 }
