@@ -19,13 +19,62 @@ var Textures = require('Textures');
 const Shaders = require('Shaders');
 const CameraInfo = require('CameraInfo');
 const Audio = require('Audio');
-
+const Networking = require('Networking');
 export const Diagnostics = require('Diagnostics');
  var GetStarted;
 var ImageTobeUsed = "";
 var RandomCartoonNum;
 //var BackgroundMainImagePlane = Scene.root.find('BackgroundMain');
 var PlaneRegMaterial = Materials.get('RegularMaterial');
+
+///Networking Gif Module
+const url = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=EY5Y0fToEvJeRqe1LvJ37zMkt9Bz8lfC&limit=5";
+// Create a request object
+const request = {
+
+    // The HTTP Method of the request
+    // (https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)
+    method: 'GET',
+  
+    // The HTTP Headers of the request
+    // (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
+    headers: {'Content-type': 'application/json; charset=UTF-8'},
+  
+    // The data to send, in string format
+    body: JSON.stringify({title: 'Networking Module'})
+  
+  };
+  Networking.fetch("https://gabby-airbus.glitch.me/random");
+
+// Send the request to the url
+// Networking.fetch(url,request).then(function(result) {
+
+//     // Check the status of the result
+//     // (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+//     if ((result.status >= 200) && (result.status < 300)) {
+  
+//       // If the request was successful, chain the JSON forward
+//       return result.json();
+  
+//     }
+  
+//     // If the request was not successful, throw an error
+//     throw new Error('HTTP status code - ' + result.status);
+  
+//   }).then(function(json) {
+  
+//     // Log the JSON obtained by the successful request
+//     Diagnostics.log('Successfully sent - ' + json.title);
+  
+//   }).catch(function(error) {
+  
+//     // Log any errors that may have happened with the request
+//     Diagnostics.log('Error - ' + error.message);
+  
+//   });
+  
+
+
 var ListTextures = [];
 // Different Textures
 //Assigning Simple background Image
