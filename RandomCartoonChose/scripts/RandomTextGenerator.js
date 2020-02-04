@@ -24,33 +24,43 @@ export const Diagnostics = require('Diagnostics');
  var GetStarted;
 var ImageTobeUsed = "";
 var RandomCartoonNum;
+var RandomCartoonNumSecond;
+
 //var BackgroundMainImagePlane = Scene.root.find('BackgroundMain');
-var PlaneRegMaterial = Materials.get('RegularMaterial');
-var ListTextures = [];
+var PlaneRegMaterialFirst = Materials.get('RegularMaterial');
+var PlaneRegMaterialSecond = Materials.get('RegularMaterialSecond');
+var ListTexturesFirst = [];
+var ListTexturesSecond = [];
+
 // Different Textures
 //Assigning Simple background Image
 const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 var i;
-for (i = 1; i < 49; i++) {
-    ImageTobeUsed = "v" + i;
-    ListTextures.push(Textures.get(ImageTobeUsed));
+for (i = 1; i < 82; i++) {
+    ImageTobeUsed = "friendsbysmol" + i;
+    ListTexturesFirst.push(Textures.get(ImageTobeUsed));
+    ListTexturesSecond.push(Textures.get(ImageTobeUsed));
 }
 const isRecordingVideo = CameraInfo.isRecordingVideo;
-PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+PlaneRegMaterialFirst.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+PlaneRegMaterialSecond.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
 
 isRecordingVideo.monitor().subscribe(function(videoOn) {
     Diagnostics.log(videoOn);
    // plane.material.diffuse = configuration.items[index.newValue].image_texture;
-   PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+   PlaneRegMaterialFirst.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+   PlaneRegMaterialSecond.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
 if (videoOn)
 {
     //RESET
-    Audio.getPlaybackController("foundeffect").reset();
- PlaneRegMaterial.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+ Audio.getPlaybackController("foundeffect").reset();
+ PlaneRegMaterialFirst.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+ PlaneRegMaterialSecond.setTexture(Textures.get("vfirst").signal, {textureSlotName: DiffuseTextureSlot});
+
 var ImageSelected =true;
 var GameStarted = false;
 
-Time.ms.interval(2000).subscribe(
+Time.ms.interval(1000).subscribe(
     function(elapsedTime) {
         if (!GameStarted)
         {
@@ -64,8 +74,11 @@ Time.ms.interval(100).subscribe(
     function(elapsedTime) {
         if(!ImageSelected)
         {
-            RandomCartoonNum = getRandomInt(ListTextures.length);
-            PlaneRegMaterial.setTexture(ListTextures[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
+            RandomCartoonNum = getRandomInt(ListTexturesFirst.length);
+            RandomCartoonNumSecond = getRandomInt(ListTexturesFirst.length);
+            PlaneRegMaterialFirst.setTexture(ListTexturesFirst[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
+            PlaneRegMaterialSecond.setTexture(ListTexturesFirst[RandomCartoonNumSecond].signal, {textureSlotName: DiffuseTextureSlot});
+
         }
     });
 
@@ -76,7 +89,8 @@ Time.ms.interval(6000).subscribe(
             {
                 ImageSelected =true;
                 Audio.getPlaybackController("foundeffect").play();
-                PlaneRegMaterial.setTexture(ListTextures[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
+                PlaneRegMaterialFirst.setTexture(ListTexturesFirst[RandomCartoonNum].signal, {textureSlotName: DiffuseTextureSlot});
+                PlaneRegMaterialSecond.setTexture(ListTexturesFirst[RandomCartoonNumSecond].signal, {textureSlotName: DiffuseTextureSlot});
             }
         });
 
