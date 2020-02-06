@@ -60,7 +60,7 @@ if (videoOn)
 var ImageSelected =true;
 var GameStarted = false;
 
-Time.ms.interval(1000).subscribe(
+Time.ms.interval(2000).subscribe(
     function(elapsedTime) {
         if (!GameStarted)
         {
@@ -70,7 +70,7 @@ Time.ms.interval(1000).subscribe(
     });
 
 
-Time.ms.interval(100).subscribe(
+Time.ms.interval(50).subscribe(
     function(elapsedTime) {
         if(!ImageSelected)
         {
