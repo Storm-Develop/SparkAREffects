@@ -36,8 +36,8 @@ var ListTexturesSecond = [];
 //Assigning Simple background Image
 const DiffuseTextureSlot = Shaders.DefaultMaterialTextures.DIFFUSE;
 var i;
-for (i = 1; i < 82; i++) {
-    ImageTobeUsed = "friendsbysmol" + i;
+for (i = 1; i < 31; i++) {
+    ImageTobeUsed = "fanfriends" + i;
     ListTexturesFirst.push(Textures.get(ImageTobeUsed));
     ListTexturesSecond.push(Textures.get(ImageTobeUsed));
 }
@@ -70,7 +70,7 @@ Time.ms.interval(2000).subscribe(
     });
 
 
-Time.ms.interval(50).subscribe(
+Time.ms.interval(150).subscribe(
     function(elapsedTime) {
         if(!ImageSelected)
         {
